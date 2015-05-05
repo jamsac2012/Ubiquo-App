@@ -5,3 +5,7 @@
 .DS_Store
 /build
 /captures
+bin
+.project
+.classpath
+commit.txt
