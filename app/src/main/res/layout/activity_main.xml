@@ -5,32 +5,40 @@
     <LinearLayout android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:orientation="vertical">
-        <LinearLayout
+
+
+        <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            >
+            android:hint="Nombre"
+            android:id="@+id/edt_nombre"/>
 
-            <Button
-                android:id="@+id/send"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="@string/send" />
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="password"
+            android:id="@+id/edt_pass"/>
 
-            <Button
-                android:id="@+id/clear"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:onClick="onClick"
-                android:text="@string/clear" />
-
-        </LinearLayout>
+        <Button
+            android:id="@+id/send"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="@string/send" />
 
         <TextView
             android:id="@+id/display"
+            android:hint="RegId"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/clear"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:onClick="onClick"
+            android:text="@string/clear"
+            android:layout_gravity="center_horizontal" />
 
     </LinearLayout>
 

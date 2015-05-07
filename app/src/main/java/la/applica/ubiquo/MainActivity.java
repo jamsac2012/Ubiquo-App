@@ -17,7 +17,17 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -46,22 +56,27 @@ public class MainActivity extends Activity {
     GoogleCloudMessaging gcm;
     AtomicInteger msgId = new AtomicInteger();
     Context context;
-
+    TextView lbl_resultado;
+    EditText nombre, password;
     String regid;
+    String usuario = "Amparo";
+    String pass = "2738165";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_main);
-        mDisplay = (TextView) findViewById(R.id.display);
 
+        nombre = (EditText) findViewById(R.id.edt_nombre);
+        password = (EditText) findViewById(R.id.edt_pass);
+        mDisplay = (TextView) findViewById(R.id.display);
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
+            mDisplay.setText(regid);
 
             if (regid.isEmpty()) {
                 registerInBackground();
@@ -101,8 +116,7 @@ public class MainActivity extends Activity {
     /**
      * Stores the registration ID and the app versionCode in the application's
      * {@code SharedPreferences}.
-     *
-     * @param context application's context.
+     *  @param context application's context.
      * @param regId registration ID
      */
     private void storeRegistrationId(Context context, String regId) {
@@ -162,7 +176,7 @@ public class MainActivity extends Activity {
 
                     // You should send the registration ID to your server over HTTP, so it
                     // can use GCM/HTTP or CCS to send messages to your app.
-                    sendRegistrationIdToBackend();
+                    sendRegistrationIdToBackend(regid);
 
                     // For this demo: we don't need to send it because the device will send
                     // upstream messages to a server that echo back the message using the
@@ -221,7 +235,55 @@ public class MainActivity extends Activity {
      * messages to your app. Not needed for this demo since the device sends upstream messages
      * to a server that echoes back the message using the 'from' address in the message.
      */
-    private void sendRegistrationIdToBackend() {
-        // Your implementation here.
+    private void sendRegistrationIdToBackend(String regID) {
+        HttpURLConnection httpConnection = null;
+        OutputStream oStream = null;
+        BufferedReader bufferedReader = null;
+        StringBuilder response = null;
+        String URL_AUTHENTICATION = "http://192.168.1.3:8081/0002";
+
+        try {
+
+            JSONObject dato = new JSONObject();
+            dato.put("usuario", "Amparo");
+            dato.put("pass", "1234");
+            dato.put("regId", regID);
+
+
+            URL url = new URL(URL_AUTHENTICATION);
+            httpConnection = (HttpURLConnection) url.openConnection();
+            httpConnection.setRequestMethod("POST");
+            httpConnection.setDoOutput(true);
+            httpConnection.setDoInput(true);
+            httpConnection.setRequestProperty("Content-Type", "application/json");
+            httpConnection.connect();
+
+            OutputStreamWriter stream = new OutputStreamWriter(httpConnection.getOutputStream());
+            stream.write(dato.toString());
+            stream.flush();
+            stream.close();
+            Log.d(TAG, "ENTREGA DE DATOS JSON");
+
+           // bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
+            //String line;
+            //response = new StringBuilder();
+
+           // while ((line = bufferedReader.readLine()) != null){
+           //     response.append(line);
+            //}
+
+            Log.d(TAG, "POST response code: " + String.valueOf(httpConnection.getResponseCode()));
+            //Log.d(TAG, "JSON response: " + response.toString());
+
+
+        } catch (Exception e) {
+            Log.e(TAG, "POST error: " + Log.getStackTraceString(e));
+
+        }finally{
+            if (httpConnection != null) {
+                httpConnection.disconnect();
+            }
+        }
+
     }
 }
