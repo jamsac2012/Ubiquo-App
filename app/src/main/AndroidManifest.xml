@@ -6,6 +6,7 @@
     <uses-permission android:name="android.permission.INTERNET"/> // Nos dará acceso a internet en la aplicación
     <uses-permission android:name="android.permission.GET_ACCOUNTS"/> // GCM requiere una cuenta de Google configurada en el dispositivo
     <uses-permission android:name="android.permission.WAKE_LOCK"/> // Necesario para utilizar un determinado tipo de broadcast receiver
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE"/> // Permitirá que la aplicación se registre y reciba mensajes de GCM
 
     // Aseguran que sólo nosotros podremos recibir los mensajes de nuestra aplicación

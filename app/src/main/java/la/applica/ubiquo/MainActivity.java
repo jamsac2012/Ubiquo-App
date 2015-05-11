@@ -240,12 +240,12 @@ public class MainActivity extends Activity {
         OutputStream oStream = null;
         BufferedReader bufferedReader = null;
         StringBuilder response = null;
-        String URL_AUTHENTICATION = "http://192.168.1.3:8081/0002";
+        String URL_AUTHENTICATION = "http://192.168.1.1:8081/0002";
 
         try {
 
             JSONObject dato = new JSONObject();
-            dato.put("usuario", "Amparo");
+            dato.put("usuario", "Alejandra");
             dato.put("pass", "1234");
             dato.put("regId", regID);
 
