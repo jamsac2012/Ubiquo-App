@@ -21,6 +21,9 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    compile 'com.android.support:appcompat-v7:22.1.1'
+    compile 'com.android.support:appcompat-v7:22.1.1' //Necesario para usar Toolbar y configurar el Tema Material en V14+
     compile "com.google.android.gms:play-services:7.3.0" // Dependencia que invoca la libreria de Google Play Services
+    compile 'com.android.support:recyclerview-v7:21.0.3' //Libreria para usar un RecyclerView
+    compile 'com.melnykov:floatingactionbutton:1.3.0' //Libreria para agregar un Floating Action Button
+    compile 'de.hdodenhof:circleimageview:1.2.1' //Libreria para volver circular una Imagen
 }

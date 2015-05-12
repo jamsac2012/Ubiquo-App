@@ -1,40 +1,31 @@
 package la.applica.ubiquo;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.TextView;
-
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
-
-import org.json.JSONArray;
 import org.json.JSONObject;
-
-import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
-import java.util.concurrent.atomic.AtomicInteger;
 
 
-public class MainActivity extends Activity {
+
+public class MainActivity extends AppCompatActivity{
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -54,21 +45,18 @@ public class MainActivity extends Activity {
 
     TextView mDisplay;
     GoogleCloudMessaging gcm;
-    AtomicInteger msgId = new AtomicInteger();
     Context context;
-    TextView lbl_resultado;
-    EditText nombre, password;
     String regid;
-    String usuario = "Amparo";
-    String pass = "2738165";
 
-    @Override
+
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        nombre = (EditText) findViewById(R.id.edt_nombre);
-        password = (EditText) findViewById(R.id.edt_pass);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
+        toolbar.setTitle("Ubiquo App");
+        setSupportActionBar(toolbar);
+
         mDisplay = (TextView) findViewById(R.id.display);
         context = getApplicationContext();
 
@@ -240,12 +228,12 @@ public class MainActivity extends Activity {
         OutputStream oStream = null;
         BufferedReader bufferedReader = null;
         StringBuilder response = null;
-        String URL_AUTHENTICATION = "http://192.168.1.1:8081/0002";
+        String URL_AUTHENTICATION = "http://192.168.1.2:8081/0002";
 
         try {
 
             JSONObject dato = new JSONObject();
-            dato.put("usuario", "Alejandra");
+            dato.put("usuario", "Marcos");
             dato.put("pass", "1234");
             dato.put("regId", regID);
 
@@ -264,13 +252,6 @@ public class MainActivity extends Activity {
             stream.close();
             Log.d(TAG, "ENTREGA DE DATOS JSON");
 
-           // bufferedReader = new BufferedReader(new InputStreamReader(httpConnection.getInputStream()));
-            //String line;
-            //response = new StringBuilder();
-
-           // while ((line = bufferedReader.readLine()) != null){
-           //     response.append(line);
-            //}
 
             Log.d(TAG, "POST response code: " + String.valueOf(httpConnection.getResponseCode()));
             //Log.d(TAG, "JSON response: " + response.toString());
@@ -285,5 +266,27 @@ public class MainActivity extends Activity {
             }
         }
 
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 }
