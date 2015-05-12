@@ -90,9 +90,9 @@ public class GcmIntentService extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.drawable.ic_plusone_small_off_client)
+                        .setSmallIcon(R.mipmap.icon_36_ldpi)
                         .setLargeIcon((((BitmapDrawable)getResources()
-                                .getDrawable(R.drawable.ic_plusone_medium_off_client)).getBitmap()))
+                                .getDrawable(R.mipmap.icon_36_ldpi)).getBitmap()))
                         .setContentTitle(title)
                         .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                         .setContentText(body)
