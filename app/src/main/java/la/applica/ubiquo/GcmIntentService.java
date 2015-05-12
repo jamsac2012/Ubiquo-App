@@ -30,7 +30,7 @@ public class GcmIntentService extends IntentService {
         super("GcmIntentService");
     }
     public static final String TAG = "GCM Demo";
-    private int notificationId = 1010;
+    private int notificationId;
     long[] pattern = new long[]{1000,500,1000};
     Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
@@ -42,6 +42,8 @@ public class GcmIntentService extends IntentService {
         Bundle extras = intent.getExtras();
         String titulo = extras.getString("titulo");
         String cuerpo = extras.getString("mensaje");
+        int msgID= Integer.parseInt(extras.getString("msgId"));
+        notificationId = msgID;
         Log.d(TAG, extras.toString());
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -79,7 +81,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String title, String body) {
-        int numMessages = 0;
+            int numMessages = 0;
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
