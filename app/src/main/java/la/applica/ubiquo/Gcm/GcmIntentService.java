@@ -1,7 +1,6 @@
-package la.applica.ubiquo;
+package la.applica.ubiquo.Gcm;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
@@ -17,7 +16,9 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import org.json.JSONObject;
+import la.applica.ubiquo.Gcm.GcmBroadcastReceiver;
+import la.applica.ubiquo.MainActivity;
+import la.applica.ubiquo.R;
 
 /**
  * Created by adrianayala on 1/05/15.

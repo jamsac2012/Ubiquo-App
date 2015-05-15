@@ -1,15 +1,18 @@
-package la.applica.ubiquo;
+package la.applica.ubiquo.Gcm;
 
 import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.util.Log;
 
 /**
  * Created by adrianayala on 1/05/15.
  */
 public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
+    String TAG;
+
     @Override
     public void onReceive(Context context, Intent intent) {
         // Explicitly specify that GcmIntentService will handle the intent.
@@ -18,5 +21,6 @@ public class GcmBroadcastReceiver extends WakefulBroadcastReceiver {
         // Start the service, keeping the device awake while it is launching.
         startWakefulService(context, (intent.setComponent(comp)));
         setResultCode(Activity.RESULT_OK);
+        Log.d(TAG,"BroadCast Receiver");
     }
 }
