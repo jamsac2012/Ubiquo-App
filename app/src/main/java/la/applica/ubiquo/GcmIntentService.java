@@ -6,6 +6,7 @@ import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
@@ -14,17 +15,20 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONObject;
+
+import la.applica.ubiquo.Model.DBManagerMensajes;
 
 /**
  * Created by adrianayala on 1/05/15.
  */
 public class GcmIntentService extends IntentService {
 
-    //public static final int NOTIFICATION_ID = 1;
+    //Instancias de variables y objetos necesarios para la manipulacion de la NOTIFICACION
     private NotificationManager mNotificationManager;
     public GcmIntentService() {
         super("GcmIntentService");
@@ -34,8 +38,8 @@ public class GcmIntentService extends IntentService {
     long[] pattern = new long[]{1000,500,1000};
     Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-
-
+    // Instancia de objetos para guardar los mensajes en la BD SqLite
+    private DBManagerMensajes manager;
 
     @Override
     protected void onHandleIntent(Intent intent) {
@@ -69,8 +73,9 @@ public class GcmIntentService extends IntentService {
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
                 // Post notification of received message.
-                sendNotification(titulo,cuerpo);
+                sendNotification(titulo, cuerpo);
                 Log.i(TAG, "Received: " + extras.toString());
+                insertar(titulo,cuerpo);
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -106,4 +111,13 @@ public class GcmIntentService extends IntentService {
 
         mNotificationManager.notify(notificationId, mBuilder.build());
     }
+
+    private void insertar(String titulo, String body) {
+
+        manager = new DBManagerMensajes(this);
+
+        manager.insertar(titulo, body);
+        Log.d(TAG,"REGISTRO EXITOSO EN LA DB");
+    }
+
 }

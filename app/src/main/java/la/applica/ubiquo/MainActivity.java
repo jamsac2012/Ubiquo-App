@@ -228,7 +228,7 @@ public class MainActivity extends AppCompatActivity{
         OutputStream oStream = null;
         BufferedReader bufferedReader = null;
         StringBuilder response = null;
-        String URL_AUTHENTICATION = "http://192.168.1.2:8081/0002";
+        String URL_AUTHENTICATION = "http://192.168.1.5:8081/0002";
 
         try {
 
