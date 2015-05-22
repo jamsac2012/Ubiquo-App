@@ -57,6 +57,8 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle("Ubiquo App");
         setSupportActionBar(toolbar);
 
+        
+
         mDisplay = (TextView) findViewById(R.id.display);
         context = getApplicationContext();
 
