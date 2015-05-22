@@ -36,6 +36,10 @@ public class DBManagerMensajes {
 
     }
 
+    public DBManagerMensajes() {
+
+    }
+
 
     //Generar Valores para la Tabla
     private ContentValues genValores(String titulo,String mensaje){

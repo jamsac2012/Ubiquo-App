@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity{
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
-            mDisplay.setText(regid);
+
 
             if (regid.isEmpty()) {
                 registerInBackground();
@@ -183,7 +183,7 @@ public class MainActivity extends AppCompatActivity{
 
             @Override
             protected void onPostExecute(String msg) {
-                mDisplay.append(msg + "\n");
+                Log.d(TAG, msg + "\n");
             }
         }.execute(null, null, null);
     }
