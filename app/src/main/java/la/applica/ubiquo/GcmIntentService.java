@@ -36,7 +36,8 @@ public class GcmIntentService extends IntentService {
     public static final String TAG = "GCM Demo";
     private int notificationId;
     long[] pattern = new long[]{1000,500,1000};
-    Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    private Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+    private int numMessages = 0;
 
     // Instancia de objetos para guardar los mensajes en la BD SqLite
     private DBManagerMensajes manager;
@@ -86,7 +87,7 @@ public class GcmIntentService extends IntentService {
     // This is just one simple example of what you might choose to do with
     // a GCM message.
     private void sendNotification(String title, String body) {
-            int numMessages = 0;
+
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
 
@@ -104,7 +105,7 @@ public class GcmIntentService extends IntentService {
                         .setTicker("Mensaje Ubiquo!!!")
                         .setVibrate(pattern)
                         .setSound(alarmSound)
-                        .setNumber(++numMessages)
+                        .setGroupSummary(true)
                         .setLights(Color.GRAY, 1, 500)
                         .setContentIntent(contentIntent)
                         .setAutoCancel(true);

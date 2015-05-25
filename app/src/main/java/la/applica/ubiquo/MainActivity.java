@@ -4,13 +4,16 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.ListView;
 import android.widget.TextView;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -23,9 +26,15 @@ import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import la.applica.ubiquo.Model.DBManagerMensajes;
 
 
 public class MainActivity extends AppCompatActivity{
+
+    private SimpleCursorAdapter adapter;
+    private Cursor cursor;
+    private DBManagerMensajes managerdb;
+    private ListView lista;
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -42,8 +51,6 @@ public class MainActivity extends AppCompatActivity{
      * Tag used on log messages.
      */
     static final String TAG = "GCM Demo";
-
-    TextView mDisplay;
     GoogleCloudMessaging gcm;
     Context context;
     String regid;
@@ -57,9 +64,14 @@ public class MainActivity extends AppCompatActivity{
         toolbar.setTitle("Ubiquo App");
         setSupportActionBar(toolbar);
 
-        
+        managerdb = new DBManagerMensajes(this);
+        lista = (ListView) findViewById(R.id.listView);
+        cursor = managerdb.cargarCursor();
+        adapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,cursor,
+                new String[]{managerdb.CN_TITULO,managerdb.CN_MSG},new int[]{android.R.id.text1,android.R.id.text2},0);
 
-        mDisplay = (TextView) findViewById(R.id.display);
+        lista.setAdapter(adapter);
+
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
@@ -74,6 +86,7 @@ public class MainActivity extends AppCompatActivity{
         } else {
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
+
     }
 
     @Override
@@ -235,7 +248,7 @@ public class MainActivity extends AppCompatActivity{
         try {
 
             JSONObject dato = new JSONObject();
-            dato.put("usuario", "Marcos");
+            dato.put("usuario", "Adrian");
             dato.put("pass", "1234");
             dato.put("regId", regID);
 
