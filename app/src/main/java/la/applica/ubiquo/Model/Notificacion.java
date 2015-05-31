@@ -1,25 +1,25 @@
 package la.applica.ubiquo.Model;
 
+import android.support.v7.widget.RecyclerView;
+import android.view.ViewGroup;
+
+import java.util.ArrayList;
+
 /**
  * Created by adrianayala on 21/05/15.
  */
-public class Notificacion {
+public class Notificacion{
 
-    int id;
+
     String titulo;
     String cuerpo;
 
-    public Notificacion(int id, String titulo, String cuerpo) {
+    public Notificacion(String titulo, String cuerpo) {
+        this.titulo = titulo;
+        this.cuerpo = cuerpo;
 
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     public String getTitulo() {
         return titulo;
@@ -36,5 +36,6 @@ public class Notificacion {
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
     }
+
 
 }

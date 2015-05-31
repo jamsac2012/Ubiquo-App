@@ -7,14 +7,15 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v4.widget.SimpleCursorAdapter;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.DefaultItemAnimator;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ListView;
-import android.widget.TextView;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
@@ -25,16 +26,21 @@ import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.ArrayList;
 
+import la.applica.ubiquo.Adapters.RecyclerAdapter;
 import la.applica.ubiquo.Model.DBManagerMensajes;
+import la.applica.ubiquo.Model.Notificacion;
 
 
 public class MainActivity extends AppCompatActivity{
 
-    private SimpleCursorAdapter adapter;
-    private Cursor cursor;
-    private DBManagerMensajes managerdb;
-    private ListView lista;
+    //private SimpleCursorAdapter adapter;
+    //private ListView lista;
+    //private Cursor cursor;
+    //private DBManagerMensajes managerdb;
+    private RecyclerView mRecyclerView;
+
 
     public static final String EXTRA_MESSAGE = "message";
     public static final String PROPERTY_REG_ID = "registration_id";
@@ -54,23 +60,56 @@ public class MainActivity extends AppCompatActivity{
     GoogleCloudMessaging gcm;
     Context context;
     String regid;
-
+    public ArrayList<Notificacion> notificaciones = new ArrayList<>();
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+                ArrayList<Notificacion> list = new ArrayList<>();
+
+                DBManagerMensajes manager = new DBManagerMensajes(this);
+                Cursor cursor = manager.cargarCursor();
+
+                while (cursor.moveToNext()) {
+
+                    int index1 = cursor.getColumnIndex(manager.CN_TITULO);
+                    int index2 = cursor.getColumnIndex(manager.CN_MSG);
+
+                    String titulo = cursor.getString(index1);
+                    String cuerpo = cursor.getString(index2);
+                    Notificacion notif = new Notificacion(titulo, cuerpo);
+                    list.add(notif);
+                }
+
+
+
+        String t = "Prueba1";
+        String c = "Texto1";
+
+        Notificacion notify1 = new Notificacion(t, c);
+        notify1.setTitulo(t);
+        notify1.setCuerpo(c);
+        notificaciones.add(notify1);
+
+        Notificacion notify2 = new Notificacion(t, c);
+        notify1.setTitulo(t);
+        notify1.setCuerpo(c);
+        notificaciones.add(notify2);
+
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
         toolbar.setTitle("Ubiquo App");
         setSupportActionBar(toolbar);
 
-        managerdb = new DBManagerMensajes(this);
-        lista = (ListView) findViewById(R.id.listView);
-        cursor = managerdb.cargarCursor();
-        adapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,cursor,
-                new String[]{managerdb.CN_TITULO,managerdb.CN_MSG},new int[]{android.R.id.text1,android.R.id.text2},0);
+        //managerdb = new DBManagerMensajes(this);
+        //cursor = managerdb.cargarCursor();
 
-        lista.setAdapter(adapter);
+
+        //lista = (ListView) findViewById(R.id.listView);
+        //adapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,cursor,
+                //new String[]{managerdb.CN_TITULO,managerdb.CN_MSG},new int[]{android.R.id.text1,android.R.id.text2},0);
+        //lista.setAdapter(adapter);
 
         context = getApplicationContext();
 
@@ -87,6 +126,11 @@ public class MainActivity extends AppCompatActivity{
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recycler_container);
+        mRecyclerView.setHasFixedSize(true);
+        mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
+        mRecyclerView.setItemAnimator(new DefaultItemAnimator());
+        mRecyclerView.setAdapter(new RecyclerAdapter(list, R.layout.card_row));
     }
 
     @Override

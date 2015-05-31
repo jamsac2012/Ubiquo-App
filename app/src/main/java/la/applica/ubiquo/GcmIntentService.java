@@ -21,7 +21,10 @@ import com.google.android.gms.gcm.GoogleCloudMessaging;
 
 import org.json.JSONObject;
 
+import java.util.ArrayList;
+
 import la.applica.ubiquo.Model.DBManagerMensajes;
+import la.applica.ubiquo.Model.Notificacion;
 
 /**
  * Created by adrianayala on 1/05/15.
@@ -37,7 +40,7 @@ public class GcmIntentService extends IntentService {
     private int notificationId;
     long[] pattern = new long[]{1000,500,1000};
     private Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
-    private int numMessages = 0;
+    private int numNotificaciones = 0;
 
     // Instancia de objetos para guardar los mensajes en la BD SqLite
     private DBManagerMensajes manager;
@@ -76,7 +79,7 @@ public class GcmIntentService extends IntentService {
                 // Post notification of received message.
                 sendNotification(titulo, cuerpo);
                 Log.i(TAG, "Received: " + extras.toString());
-                insertar(titulo,cuerpo);
+                insertarDB(titulo,cuerpo);
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -113,12 +116,24 @@ public class GcmIntentService extends IntentService {
         mNotificationManager.notify(notificationId, mBuilder.build());
     }
 
-    private void insertar(String titulo, String body) {
+    private void insertarDB(String titulo, String body) {
 
         manager = new DBManagerMensajes(this);
 
         manager.insertar(titulo, body);
-        Log.d(TAG,"REGISTRO EXITOSO EN LA DB");
+        Log.d(TAG, "REGISTRO EXITOSO EN LA DB");
     }
 
+    private void insertarArr(String titulo, String body) {
+        numNotificaciones ++;
+
+        MainActivity main = new MainActivity();
+        ArrayList<Notification> notificaciones = new ArrayList<>();
+        Notificacion notify1 = new Notificacion(titulo, body);
+        notify1.setTitulo(titulo);
+        notify1.setCuerpo(body);
+        main.notificaciones.add(numNotificaciones, notify1);
+
+        Log.d(TAG,"REGISTRO EXITOSO EN EL ARRAY");
+    }
 }

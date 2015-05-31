@@ -36,9 +36,6 @@ public class DBManagerMensajes {
 
     }
 
-    public DBManagerMensajes() {
-
-    }
 
 
     //Generar Valores para la Tabla

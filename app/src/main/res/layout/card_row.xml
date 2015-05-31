@@ -8,11 +8,19 @@
     android:id="@+id/card_view"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    card_view:cardCornerRadius="2dp">
+    card_view:cardCornerRadius="4dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:scaleType="fitCenter"
+            android:layout_marginRight="10dp"
+            android:id="@+id/img_ubiquo"
+            android:src="@drawable/ubiquo36"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -20,8 +28,10 @@
             android:textAppearance="?android:attr/textAppearanceLarge"
             android:text="Large Text"
             android:id="@+id/tv_titulo"
-            android:layout_alignParentTop="true" />
-
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/img_ubiquo"
+            android:layout_toEndOf="@+id/img_ubiquo"
+            android:textColor="@color/accent_material_light" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -29,15 +39,10 @@
             android:textAppearance="?android:attr/textAppearanceMedium"
             android:text="Medium Text"
             android:id="@+id/tv_cuerpo"
-            android:layout_below="@+id/tv_titulo" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Small Text"
-            android:id="@+id/tv_id"
-            android:layout_below="@+id/tv_cuerpo"/>
+            android:layout_below="@+id/tv_titulo"
+            android:layout_alignLeft="@+id/tv_titulo"
+            android:layout_alignStart="@+id/tv_titulo"
+            android:textColor="@color/background_material_dark" />
 
 
     </RelativeLayout>

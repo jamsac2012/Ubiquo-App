@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import la.applica.ubiquo.Model.Notificacion;
@@ -15,10 +16,11 @@ import la.applica.ubiquo.R;
  * Created by adrianayala on 22/05/15.
  */
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHolder>{
-    private List<Notificacion> items;
+
+    private ArrayList<Notificacion> items;
     private int itemLayout;
 
-    public RecyclerAdapter(List<Notificacion> items, int itemLayout){
+    public RecyclerAdapter(ArrayList<Notificacion> items, int itemLayout){
         this.items = items;
         this.itemLayout = itemLayout;
     }
@@ -27,6 +29,19 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(itemLayout, parent, false);
         return new ViewHolder(v);
+    }
+
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        public TextView titulo;
+        public TextView cuerpo;
+
+        public ViewHolder(View itemView) {
+            super(itemView);
+
+            titulo = (TextView) itemView.findViewById(R.id.tv_titulo);
+            cuerpo = (TextView) itemView.findViewById(R.id.tv_cuerpo);
+
+        }
     }
 
     @Override
@@ -42,17 +57,5 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         return items.size();
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder {
-        public TextView titulo;
-        public TextView cuerpo;
-        public TextView id;
 
-        public ViewHolder(View itemView) {
-            super(itemView);
-            id = (TextView) itemView.findViewById(R.id.tv_id);
-            titulo = (TextView) itemView.findViewById(R.id.tv_titulo);
-            cuerpo = (TextView) itemView.findViewById(R.id.tv_cuerpo);
-
-        }
-    }
 }
