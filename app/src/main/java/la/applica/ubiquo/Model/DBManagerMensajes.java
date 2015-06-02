@@ -64,7 +64,7 @@ public class DBManagerMensajes {
     //Cargar Cursor con datos
     public Cursor cargarCursor(){
         //db.query(String table, String[] columns, String selection, String[] selectionArgs, String groupBy, String having, String orderBy)
-        return db.query(TABLE_NAME, registros, null, null, null, null, null, null);
+        return db.query(TABLE_NAME, registros, null, null, null, null, CN_ID+" DESC");
     }
 
     //Funcion Buscar

@@ -35,10 +35,7 @@ import la.applica.ubiquo.Model.Notificacion;
 
 public class MainActivity extends AppCompatActivity{
 
-    //private SimpleCursorAdapter adapter;
-    //private ListView lista;
-    //private Cursor cursor;
-    //private DBManagerMensajes managerdb;
+
     private RecyclerView mRecyclerView;
 
 
@@ -47,15 +44,10 @@ public class MainActivity extends AppCompatActivity{
     private static final String PROPERTY_APP_VERSION = "appVersion";
     private static final int PLAY_SERVICES_RESOLUTION_REQUEST = 9000;
 
-    /**
-     * Substitute you own sender ID here. This is the project number you got
-     * from the API Console, as described in "Getting Started."
-     */
+
     String SENDER_ID = "29327334806";
 
-    /**
-     * Tag used on log messages.
-     */
+
     static final String TAG = "GCM Demo";
     GoogleCloudMessaging gcm;
     Context context;
@@ -83,34 +75,10 @@ public class MainActivity extends AppCompatActivity{
                 }
 
 
-
-        String t = "Prueba1";
-        String c = "Texto1";
-
-        Notificacion notify1 = new Notificacion(t, c);
-        notify1.setTitulo(t);
-        notify1.setCuerpo(c);
-        notificaciones.add(notify1);
-
-        Notificacion notify2 = new Notificacion(t, c);
-        notify1.setTitulo(t);
-        notify1.setCuerpo(c);
-        notificaciones.add(notify2);
-
-
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
         toolbar.setTitle("Ubiquo App");
         setSupportActionBar(toolbar);
-
-        //managerdb = new DBManagerMensajes(this);
-        //cursor = managerdb.cargarCursor();
-
-
-        //lista = (ListView) findViewById(R.id.listView);
-        //adapter = new SimpleCursorAdapter(this,android.R.layout.simple_list_item_2,cursor,
-                //new String[]{managerdb.CN_TITULO,managerdb.CN_MSG},new int[]{android.R.id.text1,android.R.id.text2},0);
-        //lista.setAdapter(adapter);
-
+        
         context = getApplicationContext();
 
         // Check device for Play Services APK. If check succeeds, proceed with GCM registration.
