@@ -123,17 +123,4 @@ public class GcmIntentService extends IntentService {
         manager.insertar(titulo, body);
         Log.d(TAG, "REGISTRO EXITOSO EN LA DB");
     }
-
-    private void insertarArr(String titulo, String body) {
-        numNotificaciones ++;
-
-        MainActivity main = new MainActivity();
-        ArrayList<Notification> notificaciones = new ArrayList<>();
-        Notificacion notify1 = new Notificacion(titulo, body);
-        notify1.setTitulo(titulo);
-        notify1.setCuerpo(body);
-        main.notificaciones.add(numNotificaciones, notify1);
-
-        Log.d(TAG,"REGISTRO EXITOSO EN EL ARRAY");
-    }
 }
