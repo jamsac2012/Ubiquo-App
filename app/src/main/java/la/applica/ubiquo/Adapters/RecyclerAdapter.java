@@ -34,12 +34,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
     public static class ViewHolder extends RecyclerView.ViewHolder {
         public TextView titulo;
         public TextView cuerpo;
+        public TextView fecha;
+        public TextView url;
 
         public ViewHolder(View itemView) {
             super(itemView);
 
             titulo = (TextView) itemView.findViewById(R.id.tv_titulo);
             cuerpo = (TextView) itemView.findViewById(R.id.tv_cuerpo);
+            fecha = (TextView) itemView.findViewById(R.id.tv_date);
+            url = (TextView) itemView.findViewById(R.id.tv_url);
 
         }
     }
@@ -49,7 +53,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerAdapter.ViewHo
         Notificacion item = items.get(position);
         holder.titulo.setText(item.getTitulo());
         holder.cuerpo.setText(item.getCuerpo());
-        //All the thing you gonna show in the item
+        holder.fecha.setText(item.getFecha());
+        holder.url.setText(item.getUrl());
     }
 
     @Override

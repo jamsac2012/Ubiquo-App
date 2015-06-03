@@ -6,4 +6,5 @@
     <string name="send">Send</string>
     <string name="clear">Clear</string>
     <string name="title_activity_splash__screen">Ubiquo Splash</string>
+    <string name="text_url">Pagina:</string>
 </resources>

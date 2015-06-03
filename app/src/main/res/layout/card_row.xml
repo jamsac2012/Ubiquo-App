@@ -12,7 +12,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="73dp"
+        android:layout_height="76dp"
         android:padding="10dp">
 
         <ImageView
@@ -28,22 +28,24 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="Large Text"
+            android:text="Titulo"
             android:id="@+id/tv_titulo"
+            android:textColor="@color/accent_material_light"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@+id/img_ubiquo"
-            android:layout_toEndOf="@+id/img_ubiquo"
-            android:textColor="@color/accent_material_light" />
+            android:layout_toEndOf="@+id/img_ubiquo" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Medium Text"
+            android:text="Cuerpo"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             android:id="@+id/tv_cuerpo"
             android:layout_below="@+id/tv_titulo"
             android:layout_alignLeft="@+id/tv_titulo"
             android:layout_alignStart="@+id/tv_titulo"
-            android:textColor="@color/secondary_text_default_material_light" />
+            android:textColor="@color/secondary_text_default_material_light"
+            android:layout_above="@+id/tv_text_pagina" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -57,6 +59,28 @@
             android:layout_alignParentTop="true"
             android:layout_above="@+id/tv_cuerpo"
             android:textColor="@color/primary_color" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="@string/text_url"
+            android:id="@+id/tv_text_pagina"
+            android:textColor="@color/primary_color"
+            android:layout_alignParentBottom="true"
+            android:layout_alignLeft="@+id/tv_cuerpo"
+            android:layout_alignStart="@+id/tv_cuerpo" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Small Text"
+            android:id="@+id/tv_url"
+            android:textColor="#ffb6b4b5"
+            android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/tv_text_pagina"
+            android:layout_toEndOf="@+id/tv_text_pagina" />
 
 
     </RelativeLayout>

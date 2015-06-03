@@ -38,7 +38,7 @@ public class GcmIntentService extends IntentService {
     }
     public static final String TAG = "GCM Demo";
     private int notificationId;
-    long[] pattern = new long[]{1000,500,1000};
+    long[] pattern = new long[]{1000,500,1000}; // Patron de intermitencia del led
     private Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     private int numNotificaciones = 0;
     final static String GROUP_KEY = "ubiquo-group";
@@ -51,6 +51,8 @@ public class GcmIntentService extends IntentService {
         Bundle extras = intent.getExtras();
         String titulo = extras.getString("titulo");
         String cuerpo = extras.getString("mensaje");
+        String fecha = extras.getString("date");
+        String url = extras.getString("url");
         int msgID= Integer.parseInt(extras.getString("msgId"));
         notificationId = msgID;
         Log.d(TAG, extras.toString());
@@ -67,9 +69,9 @@ public class GcmIntentService extends IntentService {
              * not interested in, or that you don't recognize.
              */
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                sendNotification(titulo, cuerpo);
+                sendNotification(titulo, cuerpo, url);
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                sendNotification("Deleted messages on server: " + titulo, cuerpo);
+                sendNotification("Deleted messages on server: " + titulo, cuerpo, url);
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
                 // This loop represents the service doing some work.
@@ -78,9 +80,10 @@ public class GcmIntentService extends IntentService {
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
                 // Post notification of received message.
-                sendNotification(titulo, cuerpo);
+                sendNotification(titulo, cuerpo, url);
                 Log.i(TAG, "Received: " + extras.toString());
-                insertarDB(titulo,cuerpo);
+                // Metodo para insertar los datos en la DBSqlite
+                insertarDB(titulo,cuerpo,fecha,url);
             }
         }
         // Release the wake lock provided by the WakefulBroadcastReceiver.
@@ -90,7 +93,7 @@ public class GcmIntentService extends IntentService {
     // Put the message into a notification and post it.
     // This is just one simple example of what you might choose to do with
     // a GCM message.
-    private void sendNotification(String title, String body) {
+    private void sendNotification(String title, String body, String url) {
 
         mNotificationManager = (NotificationManager)
                 this.getSystemService(Context.NOTIFICATION_SERVICE);
@@ -104,10 +107,10 @@ public class GcmIntentService extends IntentService {
                         .setLargeIcon((((BitmapDrawable) getResources()
                                 .getDrawable(R.mipmap.icon_36_ldpi)).getBitmap()))
                         .setContentTitle(title)
-                        .setContentText(body)
+                        .setContentText(body + url)
                         .setTicker("Mensaje Ubiquo!!!")
                         .setStyle(new NotificationCompat.InboxStyle()
-                            .addLine(title+": "+body)
+                            .addLine(title+": "+body+":"+url)
                             .setBigContentTitle("Notificaciones Ubiquo")
                             .setSummaryText(numNotificaciones + " Notificaciones"))
                         .setGroup(GROUP_KEY)
@@ -123,11 +126,11 @@ public class GcmIntentService extends IntentService {
         numNotificaciones ++;
     }
 
-    private void insertarDB(String titulo, String body) {
+    private void insertarDB(String titulo, String body, String date, String url) {
 
         manager = new DBManagerMensajes(this);
 
-        manager.insertar(titulo, body);
+        manager.insertar(titulo, body, date, url);
         Log.d(TAG, "REGISTRO EXITOSO EN LA DB");
     }
 }

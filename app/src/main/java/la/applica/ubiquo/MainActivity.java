@@ -67,10 +67,15 @@ public class MainActivity extends AppCompatActivity{
 
                     int index1 = cursor.getColumnIndex(manager.CN_TITULO);
                     int index2 = cursor.getColumnIndex(manager.CN_MSG);
+                    int index3 = cursor.getColumnIndex(manager.CN_DATE);
+                    int index4 = cursor.getColumnIndex(manager.CN_URL);
 
                     String titulo = cursor.getString(index1);
                     String cuerpo = cursor.getString(index2);
-                    Notificacion notif = new Notificacion(titulo, cuerpo);
+                    String fecha = cursor.getString(index3);
+                    String url = cursor.getString(index4);
+
+                    Notificacion notif = new Notificacion(titulo, cuerpo, fecha, url);
                     list.add(notif);
                 }
 

@@ -10,7 +10,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DB_NAME = "messages.sqlite";
-    private static final int VERSION = 1;
+    private static final int VERSION = 3;
+
 
     public DBHelper(Context context) {
         super(context, DB_NAME, null, VERSION);
@@ -23,6 +24,11 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
+        if(oldVersion == 1 && newVersion == 2){
+            db.execSQL(DBManagerMensajes.SQLUpdateV2);
+        }
+        if(oldVersion >= 1 && newVersion >= 2){
+            db.execSQL(DBManagerMensajes.SQLUpdateV3);
+        }
     }
 }

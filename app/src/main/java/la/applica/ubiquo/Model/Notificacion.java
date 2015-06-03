@@ -13,10 +13,14 @@ public class Notificacion{
 
     String titulo;
     String cuerpo;
+    String fecha;
+    String url;
 
-    public Notificacion(String titulo, String cuerpo) {
+    public Notificacion(String titulo, String cuerpo, String fecha, String url) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
+        this.fecha = fecha;
+        this.url = url;
 
     }
 
@@ -36,6 +40,23 @@ public class Notificacion{
     public void setCuerpo(String cuerpo) {
         this.cuerpo = cuerpo;
     }
+
+    public String getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(String fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
 
 
 }
