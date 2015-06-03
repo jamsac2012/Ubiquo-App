@@ -41,6 +41,7 @@ public class GcmIntentService extends IntentService {
     long[] pattern = new long[]{1000,500,1000};
     private Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     private int numNotificaciones = 0;
+    final static String GROUP_KEY = "ubiquo-group";
 
     // Instancia de objetos para guardar los mensajes en la BD SqLite
     private DBManagerMensajes manager;
@@ -100,20 +101,26 @@ public class GcmIntentService extends IntentService {
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
                         .setSmallIcon(R.mipmap.icon_36_ldpi)
-                        .setLargeIcon((((BitmapDrawable)getResources()
+                        .setLargeIcon((((BitmapDrawable) getResources()
                                 .getDrawable(R.mipmap.icon_36_ldpi)).getBitmap()))
                         .setContentTitle(title)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(body))
                         .setContentText(body)
                         .setTicker("Mensaje Ubiquo!!!")
+                        .setStyle(new NotificationCompat.InboxStyle()
+                            .addLine(title+": "+body)
+                            .setBigContentTitle("Notificaciones Ubiquo")
+                            .setSummaryText(numNotificaciones + " Notificaciones"))
+                        .setGroup(GROUP_KEY)
+                        .setGroupSummary(true)
                         .setVibrate(pattern)
                         .setSound(alarmSound)
-                        .setGroupSummary(true)
+                        .setNumber(numNotificaciones++)
                         .setLights(Color.GRAY, 1, 500)
                         .setContentIntent(contentIntent)
                         .setAutoCancel(true);
 
         mNotificationManager.notify(notificationId, mBuilder.build());
+        numNotificaciones ++;
     }
 
     private void insertarDB(String titulo, String body) {
