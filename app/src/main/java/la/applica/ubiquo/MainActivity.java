@@ -1,6 +1,7 @@
 package la.applica.ubiquo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -15,6 +16,8 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -58,7 +61,7 @@ public class MainActivity extends AppCompatActivity{
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-                ArrayList<Notificacion> list = new ArrayList<>();
+                //ArrayList<Notificacion> list = new ArrayList<>();
 
                 DBManagerMensajes manager = new DBManagerMensajes(this);
                 Cursor cursor = manager.cargarCursor();
@@ -67,16 +70,18 @@ public class MainActivity extends AppCompatActivity{
 
                     int index1 = cursor.getColumnIndex(manager.CN_TITULO);
                     int index2 = cursor.getColumnIndex(manager.CN_MSG);
-                    int index3 = cursor.getColumnIndex(manager.CN_DATE);
-                    int index4 = cursor.getColumnIndex(manager.CN_URL);
+                    int index3 = cursor.getColumnIndex(manager.CN_SENDER);
+                    int index4 = cursor.getColumnIndex(manager.CN_DATE);
+                    int index5 = cursor.getColumnIndex(manager.CN_URL);
 
                     String titulo = cursor.getString(index1);
                     String cuerpo = cursor.getString(index2);
-                    String fecha = cursor.getString(index3);
-                    String url = cursor.getString(index4);
+                    String remite = cursor.getString(index3);
+                    String fecha = cursor.getString(index4);
+                    String url = cursor.getString(index5);
 
-                    Notificacion notif = new Notificacion(titulo, cuerpo, fecha, url);
-                    list.add(notif);
+                    Notificacion notif = new Notificacion(titulo, cuerpo, remite, fecha, url);
+                    notificaciones.add(notif);
                 }
 
 
@@ -90,8 +95,6 @@ public class MainActivity extends AppCompatActivity{
         if (checkPlayServices()) {
             gcm = GoogleCloudMessaging.getInstance(this);
             regid = getRegistrationId(context);
-
-
             if (regid.isEmpty()) {
                 registerInBackground();
             }
@@ -99,11 +102,28 @@ public class MainActivity extends AppCompatActivity{
             Log.i(TAG, "No valid Google Play Services APK found.");
         }
 
+        final RecyclerAdapter adaptador = new RecyclerAdapter(notificaciones, R.layout.card_row);
+
         mRecyclerView = (RecyclerView) findViewById(R.id.recycler_container);
         mRecyclerView.setHasFixedSize(true);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(this));
         mRecyclerView.setItemAnimator(new DefaultItemAnimator());
-        mRecyclerView.setAdapter(new RecyclerAdapter(list, R.layout.card_row));
+        mRecyclerView.setAdapter(adaptador);
+
+        adaptador.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                Log.i(TAG, "Click en RecyclerView, en la posicion: " + mRecyclerView.getChildPosition(v));
+                pasar();
+            }
+        });
+    }
+
+    public void pasar(){
+        Intent i = new Intent(this, Msg_Activity.class);
+        //i.putExtra("titulo", notificaciones.get(mRecyclerView.getChildPosition()))
+        startActivity(i);
     }
 
     @Override
@@ -146,7 +166,7 @@ public class MainActivity extends AppCompatActivity{
         SharedPreferences.Editor editor = prefs.edit();
         editor.putString(PROPERTY_REG_ID, regId);
         editor.putInt(PROPERTY_APP_VERSION, appVersion);
-        editor.commit();
+        editor.apply();
     }
 
     /**
@@ -257,10 +277,10 @@ public class MainActivity extends AppCompatActivity{
      */
     private void sendRegistrationIdToBackend(String regID) {
         HttpURLConnection httpConnection = null;
-        OutputStream oStream = null;
-        BufferedReader bufferedReader = null;
-        StringBuilder response = null;
-        String URL_AUTHENTICATION = "http://192.168.1.5:8081/0002";
+        //OutputStream oStream = null;
+        //BufferedReader bufferedReader = null;
+        //StringBuilder response = null;
+        String URL_AUTHENTICATION = "http://192.168.1.3:8081/0002";
 
         try {
 

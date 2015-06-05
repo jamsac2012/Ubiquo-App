@@ -22,7 +22,7 @@
         android:protectionLevel="signature" />
 
     <uses-permission android:name="la.applica.ubiquo.permission.C2D_MESSAGE" />
-
+    
 
     <application
         android:allowBackup="true"
@@ -34,24 +34,30 @@
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
         <receiver
-            android:name=".GcmBroadcastReceiver"
+            android:name=".Gcm.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+
                 <category android:name="la.applica.ubiquo" />
             </intent-filter>
         </receiver>
 
-        <service android:name=".GcmIntentService" />
+        <service android:name=".Gcm.GcmIntentService" />
 
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_splash__screen" >
+        </activity>
+        <activity
+            android:name=".Msg_Activity"
+            android:label="@string/title_activity_msg_" >
         </activity>
     </application>
 
