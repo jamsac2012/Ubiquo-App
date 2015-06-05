@@ -1,4 +1,4 @@
-package la.applica.ubiquo;
+package la.applica.ubiquo.Gcm;
 
 import android.app.Activity;
 import android.content.ComponentName;

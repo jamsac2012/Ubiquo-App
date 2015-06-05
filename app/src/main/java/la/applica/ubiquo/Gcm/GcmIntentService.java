@@ -1,12 +1,10 @@
-package la.applica.ubiquo;
+package la.applica.ubiquo.Gcm;
 
 import android.app.IntentService;
-import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.RingtoneManager;
@@ -15,16 +13,12 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 
-import org.json.JSONObject;
-
-import java.util.ArrayList;
-
+import la.applica.ubiquo.MainActivity;
 import la.applica.ubiquo.Model.DBManagerMensajes;
-import la.applica.ubiquo.Model.Notificacion;
+import la.applica.ubiquo.R;
 
 /**
  * Created by adrianayala on 1/05/15.
