@@ -122,7 +122,7 @@ public class MainActivity extends AppCompatActivity{
 
     public void pasar(){
         Intent i = new Intent(this, Msg_Activity.class);
-        //i.putExtra("titulo", notificaciones.get(mRecyclerView.getChildPosition()))
+        //i.putExtra("titulo", onOptionsItemSelected(get))
         startActivity(i);
     }
 

@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 
 public class Msg_Activity extends AppCompatActivity {
@@ -18,6 +19,16 @@ public class Msg_Activity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.activity_my_toolbar);
         toolbar.setTitle("Notificación");
         setSupportActionBar(toolbar);
+
+        TextView titulo, cuerpo, remitente, fecha, url;
+
+        titulo = (TextView)findViewById(R.id.tv_msg_titulo);
+        cuerpo = (TextView) findViewById(R.id.tv_msg_cuerpo);
+        remitente = (TextView) findViewById(R.id.tv_msg_remitente);
+        fecha = (TextView) findViewById(R.id.tv_msg_fecha);
+        url = (TextView) findViewById(R.id.tv_msg_url);
+
+
     }
 
     @Override
