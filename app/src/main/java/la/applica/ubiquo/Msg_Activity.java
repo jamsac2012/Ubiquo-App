@@ -1,15 +1,21 @@
 package la.applica.ubiquo;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.TextView;
 
 
 public class Msg_Activity extends AppCompatActivity {
+
+    public TextView titulo, cuerpo, remitente, fecha, url;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -20,7 +26,7 @@ public class Msg_Activity extends AppCompatActivity {
         toolbar.setTitle("Notificación");
         setSupportActionBar(toolbar);
 
-        TextView titulo, cuerpo, remitente, fecha, url;
+        Bundle bundle = getIntent().getExtras();
 
         titulo = (TextView)findViewById(R.id.tv_msg_titulo);
         cuerpo = (TextView) findViewById(R.id.tv_msg_cuerpo);
@@ -28,8 +34,24 @@ public class Msg_Activity extends AppCompatActivity {
         fecha = (TextView) findViewById(R.id.tv_msg_fecha);
         url = (TextView) findViewById(R.id.tv_msg_url);
 
+        titulo.setText(bundle.getString("titulo"));
+        cuerpo.setText(bundle.getString("cuerpo"));
+        remitente.setText(bundle.getString("remite"));
+        fecha.setText(bundle.getString("fecha"));
+        url.setText(bundle.getString("url"));
+    }
+
+    public void navegar(View v){
+        String url= "http:totalsip.net";
+        Intent i = new Intent(Intent.ACTION_VIEW);
+        i.setData(Uri.parse(url));
+        startActivity(i);
+        Log.d(MainActivity.TAG,"Navegacion");
+        finish();
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

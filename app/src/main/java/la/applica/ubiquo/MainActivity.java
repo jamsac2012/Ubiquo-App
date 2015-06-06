@@ -56,12 +56,15 @@ public class MainActivity extends AppCompatActivity{
     Context context;
     String regid;
     public ArrayList<Notificacion> notificaciones = new ArrayList<>();
+    public int posicion = 0;
+    public Bundle bundle = new Bundle();
+
 
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-                //ArrayList<Notificacion> list = new ArrayList<>();
+                //ArrayList<Notificacion> Adaptador
 
                 DBManagerMensajes manager = new DBManagerMensajes(this);
                 Cursor cursor = manager.cargarCursor();
@@ -115,6 +118,13 @@ public class MainActivity extends AppCompatActivity{
             public void onClick(View v) {
 
                 Log.i(TAG, "Click en RecyclerView, en la posicion: " + mRecyclerView.getChildPosition(v));
+                posicion = mRecyclerView.getChildPosition(v);
+                bundle.putString("titulo",notificaciones.get(posicion).getTitulo());
+                bundle.putString("cuerpo", notificaciones.get(posicion).getCuerpo());
+                bundle.putString("remite", notificaciones.get(posicion).getRemite());
+                bundle.putString("fecha", notificaciones.get(posicion).getFecha());
+                bundle.putString("url", notificaciones.get(posicion).getUrl());
+                Log.d(TAG, bundle.toString());
                 pasar();
             }
         });
@@ -122,8 +132,9 @@ public class MainActivity extends AppCompatActivity{
 
     public void pasar(){
         Intent i = new Intent(this, Msg_Activity.class);
-        //i.putExtra("titulo", onOptionsItemSelected(get))
+        i.putExtras(bundle);
         startActivity(i);
+        finish();
     }
 
     @Override
