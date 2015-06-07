@@ -53,13 +53,12 @@
                     android:layout_height="wrap_content"
                     android:textAppearance="?android:attr/textAppearanceSmall"
                     android:text="Fecha"
+                    android:textSize="10dp"
                     android:textColor="@color/abc_input_method_navigation_guard"
                     android:id="@+id/tv_msg_fecha"
-                    android:layout_centerVertical="true"
+                    android:layout_alignTop="@+id/img_avatar"
                     android:layout_alignParentRight="true"
-                    android:layout_alignParentEnd="true"
-                    android:layout_marginRight="19dp"
-                    android:layout_marginEnd="19dp" />
+                    android:layout_alignParentEnd="true" />
 
         </RelativeLayout>
 

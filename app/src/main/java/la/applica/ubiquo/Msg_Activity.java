@@ -42,7 +42,8 @@ public class Msg_Activity extends AppCompatActivity {
     }
 
     public void navegar(View v){
-        String url= "http:totalsip.net";
+        Bundle bundle = getIntent().getExtras();
+        String url = bundle.getString("url");
         Intent i = new Intent(Intent.ACTION_VIEW);
         i.setData(Uri.parse(url));
         startActivity(i);

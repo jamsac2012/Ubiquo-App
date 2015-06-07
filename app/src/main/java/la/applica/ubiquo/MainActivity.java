@@ -134,7 +134,6 @@ public class MainActivity extends AppCompatActivity{
         Intent i = new Intent(this, Msg_Activity.class);
         i.putExtras(bundle);
         startActivity(i);
-        finish();
     }
 
     @Override
