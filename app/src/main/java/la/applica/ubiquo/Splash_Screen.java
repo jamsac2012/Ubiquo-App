@@ -21,6 +21,11 @@ public class Splash_Screen extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash__screen);
 
+        if (MainActivity.sw==0){
+            Intent i= new Intent(this,MainActivity.class);
+            startActivity(i);
+            finish();
+        }else {
 
             TimerTask task = new TimerTask() {
                 @Override
@@ -31,7 +36,7 @@ public class Splash_Screen extends Activity {
 
             Timer timer = new Timer();
             timer.schedule(task, splashDelay);//Pasado los 5 segundos dispara la tarea
-
+        }
     }
 
     private void pasar(){

@@ -38,7 +38,7 @@ import la.applica.ubiquo.Model.Notificacion;
 
 public class MainActivity extends AppCompatActivity{
 
-
+    public static final int sw = 0;
     private RecyclerView mRecyclerView;
 
 
