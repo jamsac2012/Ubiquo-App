@@ -9,9 +9,8 @@
     <string name="text_url">Remite:</string>
     <string name="title_activity_msg_">Mensaje</string>
     <string name="title_activity_login">Login</string>
-    <string name="tv_login_title">Registro UbiquoApp</string>
-    <string name="bt_login">Login</string>
-    <string name="tv_login_user">Usuario</string>
-    <string name="tv_login_pass">Password</string>
+    <string name="bt_login">Iniciar Sesion</string>
+    <string name="tv_login_user">Usuario:</string>
+    <string name="tv_login_pass">Password:</string>
 
 </resources>

@@ -40,7 +40,7 @@ public class Splash_Screen extends Activity {
     }
 
     private void pasar(){
-        Intent splasInt= new Intent(this,MainActivity.class);
+        Intent splasInt= new Intent(this,Login.class);
         startActivity(splasInt);
         finish();
     }

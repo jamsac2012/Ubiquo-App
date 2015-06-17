@@ -41,7 +41,7 @@ public class Msg_Activity extends AppCompatActivity {
         url.setText(bundle.getString("url"));
     }
 
-    public void navegar(View v){
+    public void navegarUrl(View v){
         Bundle bundle = getIntent().getExtras();
         String url = bundle.getString("url");
         Intent i = new Intent(Intent.ACTION_VIEW);

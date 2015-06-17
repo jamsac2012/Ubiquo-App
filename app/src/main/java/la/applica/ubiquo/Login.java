@@ -1,16 +1,36 @@
 package la.applica.ubiquo;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class Login extends AppCompatActivity {
+
+    public String usuario, clave;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
+
+        EditText user = (EditText) findViewById(R.id.et_login_user);
+        user.setHintTextColor(getResources().getColor(R.color.primary_dark_color));
+        EditText pass = (EditText) findViewById(R.id.et_login_password);
+        pass.setHintTextColor(getResources().getColor(R.color.primary_dark_color));
+
+        usuario = user.getText().toString();
+        clave = pass.getText().toString();
+
+    }
+
+    public void login (View v){
+        Intent i = new Intent(this, MainActivity.class);
+        startActivity(i);
+        finish();
     }
 
     @Override
