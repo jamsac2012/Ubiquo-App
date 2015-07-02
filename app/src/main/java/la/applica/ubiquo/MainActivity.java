@@ -17,15 +17,13 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import org.json.JSONObject;
-import java.io.BufferedReader;
+
 import java.io.IOException;
-import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -125,12 +123,12 @@ public class MainActivity extends AppCompatActivity{
                 bundle.putString("fecha", notificaciones.get(posicion).getFecha());
                 bundle.putString("url", notificaciones.get(posicion).getUrl());
                 Log.d(TAG, bundle.toString());
-                pasar();
+                passToMsg();
             }
         });
     }
 
-    public void pasar(){
+    public void passToMsg(){
         Intent i = new Intent(this, Msg_Activity.class);
         i.putExtras(bundle);
         startActivity(i);
@@ -290,7 +288,7 @@ public class MainActivity extends AppCompatActivity{
         //OutputStream oStream = null;
         //BufferedReader bufferedReader = null;
         //StringBuilder response = null;
-        String URL_AUTHENTICATION = "http://192.168.1.3:8081/0002";
+        String URL_AUTHENTICATION = "http://192.168.1.4:8081/0002";
 
         try {
 
