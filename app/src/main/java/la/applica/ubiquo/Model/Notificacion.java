@@ -14,15 +14,21 @@ public class Notificacion{
     String titulo;
     String cuerpo;
     String remite;
+    String avatar;
     String fecha;
     String url;
+    String msgId;
+    String estado;
 
-    public Notificacion(String titulo, String cuerpo, String remite, String fecha, String url) {
+    public Notificacion(String titulo, String cuerpo, String remite, String avatar, String fecha, String url, String msgId, String estado) {
         this.titulo = titulo;
         this.cuerpo = cuerpo;
         this.remite = remite;
+        this.avatar = avatar;
         this.fecha = fecha;
         this.url = url;
+        this.msgId = msgId;
+        this.estado = estado;
 
     }
 
@@ -67,6 +73,29 @@ public class Notificacion{
         this.url = url;
     }
 
+    public String getAvatar() {
+        return avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getMsgId() {
+        return msgId;
+    }
+
+    public void setMsgId(String msgId) {
+        this.msgId = msgId;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 
 
 }

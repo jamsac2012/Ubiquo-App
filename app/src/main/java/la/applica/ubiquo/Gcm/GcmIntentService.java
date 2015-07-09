@@ -13,7 +13,9 @@ import android.os.Bundle;
 import android.os.SystemClock;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
+
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+
 import la.applica.ubiquo.MainActivity;
 import la.applica.ubiquo.Model.DBManagerMensajes;
 import la.applica.ubiquo.R;
@@ -25,12 +27,14 @@ public class GcmIntentService extends IntentService {
 
     //Instancias de variables y objetos necesarios para la manipulacion de la NOTIFICACION
     private NotificationManager mNotificationManager;
+
     public GcmIntentService() {
         super("GcmIntentService");
     }
+
     public static final String TAG = "GCM Demo";
     private int notificationId;
-    long[] pattern = new long[]{1000,500,1000}; // Patron de intermitencia del led
+    long[] pattern = new long[]{1000, 500, 1000}; // Patron de intermitencia del led
     private Uri alarmSound = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
     private int numNotificaciones = 0;
     final static String GROUP_KEY = "ubiquo-group";
@@ -44,10 +48,14 @@ public class GcmIntentService extends IntentService {
         String titulo = extras.getString("titulo");
         String cuerpo = extras.getString("mensaje");
         String remite = extras.getString("sender");
+        String avatar = extras.getString("avatar");
         String fecha = extras.getString("date");
         String url = extras.getString("url");
-        int msgID= Integer.parseInt(extras.getString("msgId"));
-        notificationId = msgID;
+        String msgId = extras.getString("msgId");
+        String estado = extras.getString("msgState");
+
+
+        notificationId = Integer.parseInt(msgId);
         Log.d(TAG, extras.toString());
 
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
@@ -62,10 +70,10 @@ public class GcmIntentService extends IntentService {
              * not interested in, or that you don't recognize.
              */
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR.equals(messageType)) {
-                insertarDB(titulo,cuerpo,remite,fecha,url);
+                insertarDB(titulo, cuerpo, remite, avatar, fecha, url, msgId, estado);
                 sendNotification(titulo, cuerpo);
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_DELETED.equals(messageType)) {
-                insertarDB(titulo,cuerpo,remite,fecha,url);
+                insertarDB(titulo, cuerpo, remite, avatar, fecha, url, msgId, estado);
                 sendNotification("Deleted messages on server: " + titulo, cuerpo);
                 // If it's a regular GCM message, do some work.
             } else if (GoogleCloudMessaging.MESSAGE_TYPE_MESSAGE.equals(messageType)) {
@@ -74,7 +82,7 @@ public class GcmIntentService extends IntentService {
 
                 Log.i(TAG, "Completed work @ " + SystemClock.elapsedRealtime());
 
-                insertarDB(titulo,cuerpo,remite,fecha,url);
+                insertarDB(titulo, cuerpo, remite, avatar, fecha, url, msgId, estado);
                 // Post notification of received message.
                 sendNotification(titulo, cuerpo);
                 Log.i(TAG, "Received: " + extras.toString());
@@ -104,11 +112,11 @@ public class GcmIntentService extends IntentService {
                                 .getDrawable(R.mipmap.icon_36_ldpi)).getBitmap()))
                         .setContentTitle(title)
                         .setContentText(body)
-                        .setTicker("Mensaje Ubiquo!!!")
+                        .setTicker("Mensaje Ubiquo")
                         .setStyle(new NotificationCompat.InboxStyle()
-                            .addLine(title+": "+body)
-                            .setBigContentTitle("Notificaciones Ubiquo")
-                            .setSummaryText(numNotificaciones + " Notificaciones"))
+                                .addLine(title + ": " + body)
+                                .setBigContentTitle("Notificaciones Ubiquo")
+                                .setSummaryText(numNotificaciones + " Notificaciones"))
                         .setGroup(GROUP_KEY)
                         .setGroupSummary(true)
                         .setVibrate(pattern)
@@ -119,14 +127,21 @@ public class GcmIntentService extends IntentService {
                         .setAutoCancel(true);
 
         mNotificationManager.notify(notificationId, mBuilder.build());
-        numNotificaciones ++;
+        numNotificaciones++;
     }
 
-    private void insertarDB(String titulo, String body, String sender, String date, String url) {
+    private void insertarDB(String titulo,
+                            String body,
+                            String sender,
+                            String avatar,
+                            String date,
+                            String url,
+                            String msgId,
+                            String state) {
 
         manager = new DBManagerMensajes(this);
 
-        manager.insertar(titulo, body, sender, date, url);
+        manager.insertar(titulo, body, sender, avatar, date, url, msgId, state);
         Log.d(TAG, "REGISTRO EXITOSO EN LA DB");
     }
 }

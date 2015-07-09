@@ -70,18 +70,27 @@ public class MainActivity extends AppCompatActivity{
                 while (cursor.moveToNext()) {
 
                     int index1 = cursor.getColumnIndex(manager.CN_TITULO);
-                    int index2 = cursor.getColumnIndex(manager.CN_MSG);
+                    int index2 = cursor.getColumnIndex(manager.CN_BODY);
                     int index3 = cursor.getColumnIndex(manager.CN_SENDER);
-                    int index4 = cursor.getColumnIndex(manager.CN_DATE);
-                    int index5 = cursor.getColumnIndex(manager.CN_URL);
+                    int index4 = cursor.getColumnIndex(manager.CN_AVATAR_URL);
+                    int index5 = cursor.getColumnIndex(manager.CN_DATE);
+                    int index6 = cursor.getColumnIndex(manager.CN_URL);
+                    int index7 = cursor.getColumnIndex(manager.CN_MSG_ID);
+                    int index8 = cursor.getColumnIndex(manager.CN_MSG_STATE);
+
+
 
                     String titulo = cursor.getString(index1);
                     String cuerpo = cursor.getString(index2);
                     String remite = cursor.getString(index3);
-                    String fecha = cursor.getString(index4);
-                    String url = cursor.getString(index5);
+                    String avatar = cursor.getString(index4);
+                    String fecha = cursor.getString(index5);
+                    String url = cursor.getString(index6);
+                    String msgId = cursor.getString(index7);
+                    String estado = cursor.getString(index8);
 
-                    Notificacion notif = new Notificacion(titulo, cuerpo, remite, fecha, url);
+
+                    Notificacion notif = new Notificacion(titulo, cuerpo, remite, avatar, fecha, url, msgId, estado);
                     notificaciones.add(notif);
                 }
 

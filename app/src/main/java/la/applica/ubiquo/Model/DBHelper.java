@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DBHelper extends SQLiteOpenHelper {
 
-    private static final String DB_NAME = "ubiquo_app.sqlite";
+    private static final String DB_NAME = "salome";
     private static final int VERSION = 1;
 
 
@@ -24,11 +24,6 @@ public class DBHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        //if(oldVersion == 1 && newVersion == 2){
-          //  db.execSQL(DBManagerMensajes.SQLUpdateV2);
-        //}
-        //if(oldVersion >= 1 && newVersion >= 2){
-          //  db.execSQL(DBManagerMensajes.SQLUpdateV3);
-        //}
+
     }
 }
